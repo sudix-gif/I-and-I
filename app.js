@@ -124,3 +124,32 @@ app.post("/register", (req, res) => {
 app.listen(PORT, () => {
   console.log(`I&I Server running on port ${PORT}`);
 });
+// User Login
+app.post("/login", (req, res) => {
+
+  const { username, password } = req.body;
+
+  const db = loadDB();
+
+  const user = db.users.find(
+    u => u.username === username && u.password === password
+  );
+
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid username or password"
+    });
+  }
+
+  res.json({
+    success: true,
+    message: "Login successful",
+    user: {
+      id: user.id,
+      username: user.username,
+      subscription: user.subscription
+    }
+  });
+
+});
