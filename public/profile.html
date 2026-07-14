@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - I&I</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>My Profile</h1>
+
+<div id="profile">
+  <p><strong>Username:</strong> <span id="username"></span></p>
+  <p><strong>Subscription:</strong> <span id="subscription"></span></p>
+</div>
+
+<a href="dashboard.html">
+  <button>Back to Dashboard</button>
+</a>
+
+<script>
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+  window.location.href = "/login.html";
+}
+
+document.getElementById("username").textContent = user.username;
+document.getElementById("subscription").textContent = user.subscription;
+</script>
+
+</body>
+</html>

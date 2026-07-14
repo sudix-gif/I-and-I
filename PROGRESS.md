@@ -25,17 +25,22 @@ Date: 2026-07-12
 - Login Page completed
 - Frontend connected to backend
 - Registration works in browser
-- Login works in browser
+- Login work in browser
+l
+## Day 4
+
+- Professional CSS added
+- Dashboard improved
+- Profile page completed
+- User data displayed from localStorage
 
 ## NEXT
-☐ User Profile
-☐ Edit Profile
-☐ JWT Authentication
-☐ Like Posts
+☐ JWT Autethentication
+☐ like posts
 ☐ Comments
-☐ Photo Upload
-☐ Video Upload
-☐ Audio Upload
-☐ 30 Days Free Trial
-☐ $2 Monthly Subscription
+☐ photo upload 
+☐ video upload
+☐ audio upload
+☐ 30 days free trial
+☐ $2 monthly subscription
 ☐ Android App

@@ -27,6 +27,7 @@ if (form) {
   });
 
 }
+
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
@@ -54,7 +55,14 @@ if (loginForm) {
     document.getElementById("message").innerText = data.message;
 
     if (data.success) {
-      alert("Welcome " + data.user.username);
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
+
+      window.location.href = "/dashboard.html";
+
     }
 
   });
