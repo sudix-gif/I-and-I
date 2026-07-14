@@ -33,14 +33,16 @@ l
 - Dashboard improved
 - Profile page completed
 - User data displayed from localStorage
+## Day 5
 
+- Admin Panel completed
+- Admin can publish posts from browser
+- Dashboard displays posts
+- Feed connected to backend
 ## NEXT
 ☐ JWT Autethentication
 ☐ like posts
 ☐ Comments
-☐ photo upload 
-☐ video upload
-☐ audio upload
 ☐ 30 days free trial
 ☐ $2 monthly subscription
 ☐ Android App

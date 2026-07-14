@@ -68,3 +68,30 @@ if (loginForm) {
   });
 
 }
+async function loadPosts() {
+
+  const postsContainer = document.getElementById("posts");
+
+  if (!postsContainer) return;
+
+  const response = await fetch("/posts");
+  const posts = await response.json();
+
+  postsContainer.innerHTML = "";
+
+  posts.forEach(post => {
+
+    postsContainer.innerHTML += `
+      <div class="post">
+        <h3>${post.title}</h3>
+        <p>${post.content}</p>
+        <small>${post.type}</small>
+        <hr>
+      </div>
+    `;
+
+  });
+
+}
+
+loadPosts();

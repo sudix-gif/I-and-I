@@ -31,5 +31,20 @@
       "subscription": "trial"
     }
   ],
-  "posts": []
+  "posts": [
+    {
+      "id": 1784066257533,
+      "type": "news",
+      "title": "Welcome to I&I",
+      "content": "This is the first official post on I&I.",
+      "created_at": "2026-07-14T21:57:37.533Z"
+    },
+    {
+      "id": 1784067204588,
+      "type": "News",
+      "title": "Testing I&I",
+      "content": "you are wellcome on I&I App designed by roger(sudix)",
+      "created_at": "2026-07-14T22:13:24.588Z"
+    }
+  ]
 }
