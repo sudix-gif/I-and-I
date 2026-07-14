@@ -1,11 +1,10 @@
-const express = require("express");
-const fs = require("fs");
+const express = require("express");const fs = require("fs");
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-
+app.use(express.static("public"));
 function loadDB() {
   return JSON.parse(fs.readFileSync("database.json", "utf8"));
 }
