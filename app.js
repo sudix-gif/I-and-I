@@ -118,10 +118,6 @@ app.post("/register", (req, res) => {
     success: true,
     message: "Registration successful"
   });
-
-});// Start Server
-app.listen(PORT, () => {
-  console.log(`I&I Server running on port ${PORT}`);
 });
 // User Login
 app.post("/login", (req, res) => {
@@ -151,4 +147,37 @@ app.post("/login", (req, res) => {
     }
   });
 
+});
+// Update Profile
+app.post("/profile/update", (req, res) => {
+
+  const { oldUsername, username, password } = req.body;
+
+  const db = loadDB();
+
+  const user = db.users.find(
+    u => u.username === oldUsername
+  );
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+  user.username = username;
+  user.password = password;
+
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: "Profile updated"
+  });
+
+});
+// Start Server
+app.listen(PORT, () => {
+  console.log(`I&I Server running on port ${PORT}`);
 });

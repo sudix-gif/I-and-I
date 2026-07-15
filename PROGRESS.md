@@ -39,10 +39,9 @@ l
 - Admin can publish posts from browser
 - Dashboard displays posts
 - Feed connected to backend
-## NEXT
-☐ JWT Autethentication
-☐ like posts
-☐ Comments
-☐ 30 days free trial
-☐ $2 monthly subscription
-☐ Android App
+## Day 6
+
+- Edit Profile page completed
+- Users can update username
+- Users can update password
+- Profile updates saved in database
