@@ -1,11 +1,20 @@
 const express = require("express");const fs = require("fs");
-
+const multer = require("multer");
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 app.use(express.static("public"));
-function loadDB() {
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
+
+const upload = multer({ storage });function loadDB() {
   return JSON.parse(fs.readFileSync("database.json", "utf8"));
 }
 
@@ -174,6 +183,23 @@ app.post("/profile/update", (req, res) => {
   res.json({
     success: true,
     message: "Profile updated"
+  });
+
+});
+// Upload Photo
+app.post("/upload/photo", upload.single("photo"), (req, res) => {
+
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      message: "No photo uploaded"
+    });
+  }
+
+  res.json({
+    success: true,
+    message: "Photo uploaded successfully",
+    filename: req.file.filename
   });
 
 });

@@ -45,3 +45,10 @@ l
 - Users can update username
 - Users can update password
 - Profile updates saved in database
+## Day 7
+
+- Multer installed
+- Photo upload endpoint completed
+- Upload page completed
+- Users can upload photos
+- Photos saved in uploads folder
