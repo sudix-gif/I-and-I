@@ -5,7 +5,7 @@ const PORT = 3000;
 
 app.use(express.json());
 app.use(express.static("public"));
-const storage = multer.diskStorage({
+app.use("/uploads", express.static("uploads"));const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
   },
@@ -65,14 +65,15 @@ app.post("/admin/post", (req, res) => {
     });
   }
 
-  db.posts.push({
-    id: Date.now(),
-    type,
-    title,
-    content,
-    created_at: new Date().toISOString()
-  });
-
+db.posts.push({
+  id: Date.now(),
+  type,
+  title,
+  content,
+  likes: 0,
+  comments: [],
+  created_at: new Date().toISOString()
+});
   saveDB(db);
 
   res.json({
@@ -196,14 +197,83 @@ app.post("/upload/photo", upload.single("photo"), (req, res) => {
     });
   }
 
+  const db = loadDB();
+
+db.posts.push({
+  id: Date.now(),
+  type: "photo",
+  filename: req.file.filename,
+  likes: 0,
+  comments: [],
+  created_at: new Date().toISOString()
+});
+  saveDB(db);
+
+
   res.json({
     success: true,
-    message: "Photo uploaded successfully",
-    filename: req.file.filename
+    message: "Photo uploaded successfully"
   });
 
 });
+
+// Like Post
+app.post("/post/like", (req, res) => {
+
+  const { id } = req.body;
+
+  const db = loadDB();
+
+  const post = db.posts.find(p => p.id == id);
+
+  if (!post) {
+    return res.status(404).json({
+      success: false,
+      message: "Post not found"
+    });
+  }
+
+  post.likes = (post.likes || 0) + 1;
+
+  saveDB(db);
+
+  res.json({
+    success: true,
+    likes: post.likes
+  });
+
+});
+
 // Start Server
-app.listen(PORT, () => {
+app// Add Comment
+app.post("/post/comment", (req, res) => {
+
+const { id, username, comment } = req.body;
+  const db = loadDB();
+
+  const post = db.posts.find(p => p.id == id);
+
+  if (!post) {
+    return res.status(404).json({
+      success: false,
+      message: "Post not found"
+    });
+  }
+
+  if (!post.comments) {
+    post.comments = [];
+  }
+
+post.comments.push({
+  username,
+  text: comment
+});
+  saveDB(db);
+
+  res.json({    success: true,
+    comments: post.comments
+  });
+
+});app.listen(PORT, () => {
   console.log(`I&I Server running on port ${PORT}`);
 });

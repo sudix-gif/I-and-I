@@ -37,14 +37,38 @@
       "type": "news",
       "title": "Welcome to I&I",
       "content": "This is the first official post on I&I.",
-      "created_at": "2026-07-14T21:57:37.533Z"
+      "created_at": "2026-07-14T21:57:37.533Z",
+      "likes": 4
     },
     {
       "id": 1784067204588,
       "type": "News",
       "title": "Testing I&I",
       "content": "you are wellcome on I&I App designed by roger(sudix)",
-      "created_at": "2026-07-14T22:13:24.588Z"
+      "created_at": "2026-07-14T22:13:24.588Z",
+      "likes": 6
+    },
+    {
+      "id": 1784185314650,
+      "type": "photo",
+      "filename": "1784185314425-Screenshot_20260715-221725.jpg",
+      "created_at": "2026-07-16T07:01:54.651Z",
+      "likes": 6,
+      "comments": [
+        {
+          "username": "Sudix2026",
+          "text": "Ndabona biri gukunda"
+        }
+      ]
+    },
+    {
+      "id": 1784304556703,
+      "type": "Photo",
+      "title": "Ex byakunze",
+      "content": "Ok bizaza",
+      "likes": 1,
+      "comments": [],
+      "created_at": "2026-07-17T16:09:16.706Z"
     }
   ]
 }
