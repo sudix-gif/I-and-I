@@ -14,7 +14,10 @@ app.use("/uploads", express.static("uploads"));const storage = multer.diskStorag
   }
 });
 
-const upload = multer({ storage });function loadDB() {
+const upload =
+ multer({ storage });
+
+function loadDB() {
   return JSON.parse(fs.readFileSync("database.json", "utf8"));
 }
 
@@ -80,8 +83,8 @@ db.posts.push({
     success: true,
     message: "Post published"
   });
-
 });
+
 // Get all posts
 app.get("/posts", (req, res) => {
   const db = loadDB();
@@ -113,22 +116,24 @@ app.post("/register", (req, res) => {
     });
   }
 
-  db.users.push({
-    id: Date.now(),
-    username,
-    password,
-    role: "user",
-    trialStart: new Date().toISOString(),
-    subscription: "trial"
-  });
+db.users.push({
+  id: Date.now(),
+  username,
+  password,
+  role: "user",
+  trialStart: new Date().toISOString(),
+  subscription: "trial",
+  profilePhoto: ""
+});
 
   saveDB(db);
 
   res.json({
     success: true,
     message: "Registration successful"
-  });
 });
+});
+
 // User Login
 app.post("/login", (req, res) => {
 
@@ -150,13 +155,13 @@ app.post("/login", (req, res) => {
   res.json({
     success: true,
     message: "Login successful",
-    user: {
-      id: user.id,
-      username: user.username,
-      subscription: user.subscription
-    }
+user: {
+  id: user.id,
+  username: user.username,
+  subscription: user.subscription,
+  profilePhoto: user.profilePhoto
+}    
   });
-
 });
 // Update Profile
 app.post("/profile/update", (req, res) => {
@@ -185,7 +190,6 @@ app.post("/profile/update", (req, res) => {
     success: true,
     message: "Profile updated"
   });
-
 });
 // Upload Photo
 app.post("/upload/photo", upload.single("photo"), (req, res) => {
@@ -216,15 +220,49 @@ db.posts.push({
   });
 
 });
+// Upload Profile Photo
+app.post("/profile/photo", upload.single("photo"), (req, res) => {
 
-// Like Post
-app.post("/post/like", (req, res) => {
+  const { username } = req.body;
 
-  const { id } = req.body;
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      message: "No photo uploaded"
+    });
+  }
 
   const db = loadDB();
 
-  const post = db.posts.find(p => p.id == id);
+  const user = db.users.find(u => u.username === username);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+  user.profilePhoto = req.file.filename;
+
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: "Profile photo uploaded",
+    filename: req.file.filename
+  });
+});
+// Like Post (One Like Per User)
+app.post("/post/like", (req, res) => {
+
+  const { id, username } = req.body;
+
+  const db = loadDB();
+
+  const post = db.posts.find(
+    p => p.id == id
+  );
 
   if (!post) {
     return res.status(404).json({
@@ -233,19 +271,38 @@ app.post("/post/like", (req, res) => {
     });
   }
 
-  post.likes = (post.likes || 0) + 1;
+
+  if (!post.likedBy) {
+    post.likedBy = [];
+  }
+
+
+  if (post.likedBy.includes(username)) {
+
+    return res.json({
+      success: false,
+      message: "Already liked",
+      likes: post.likes || 0
+    });
+
+  }
+
+
+  post.likedBy.push(username);
+
+  post.likes = post.likedBy.length;
+
 
   saveDB(db);
+
 
   res.json({
     success: true,
     likes: post.likes
   });
-
 });
 
-// Start Server
-app// Add Comment
+// Add Comment
 app.post("/post/comment", (req, res) => {
 
 const { id, username, comment } = req.body;
@@ -264,16 +321,71 @@ const { id, username, comment } = req.body;
     post.comments = [];
   }
 
+const user = db.users.find(u => u.username === username);
+
 post.comments.push({
   username,
+  profilePhoto: user ? user.profilePhoto : "",
   text: comment
 });
   saveDB(db);
 
   res.json({    success: true,
     comments: post.comments
+
+  });
+});
+
+// Search Users
+app.get("/users/search", (req, res) => {
+
+  const db = loadDB();
+
+  const query = (req.query.q || "").toLowerCase();
+
+  const users = db.users.filter(user =>
+    user.username.toLowerCase().includes(query)
+  );
+
+  res.json(users);
+
+});
+
+// Submit Topic
+app.post("/topic", (req, res) => {
+
+  const { username, topic } = req.body;
+
+  if (!topic || topic.trim() === "") {
+    return res.status(400).json({
+      success: false,
+      message: "Topic is required"
+    });
+  }
+
+  const db = loadDB();
+
+  db.topics.push({
+    id: Date.now(),
+    username,
+    topic,
+    created_at: new Date().toISOString()
   });
 
-});app.listen(PORT, () => {
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: "Topic submitted successfully"
+  });
+});
+app.get("/topics", (req, res) => {
+
+  const db = loadDB();
+
+  res.json(db.topics);
+	});
+
+app.listen(PORT, () => {
   console.log(`I&I Server running on port ${PORT}`);
 });

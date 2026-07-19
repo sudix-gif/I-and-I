@@ -28,7 +28,8 @@
       "password": "123456",
       "role": "user",
       "trialStart": "2026-07-14T00:16:56.781Z",
-      "subscription": "trial"
+      "subscription": "trial",
+      "profilePhoto": "1784354502513-Screenshot_20260715-070920.jpg"
     }
   ],
   "posts": [
@@ -53,11 +54,16 @@
       "type": "photo",
       "filename": "1784185314425-Screenshot_20260715-221725.jpg",
       "created_at": "2026-07-16T07:01:54.651Z",
-      "likes": 6,
+      "likes": 7,
       "comments": [
         {
           "username": "Sudix2026",
           "text": "Ndabona biri gukunda"
+        },
+        {
+          "username": "Sudix2026",
+          "profilePhoto": "1784354502513-Screenshot_20260715-070920.jpg",
+          "text": "Humura bizaza"
         }
       ]
     },
@@ -72,3 +78,5 @@
     }
   ]
 }
+"topics": []
+

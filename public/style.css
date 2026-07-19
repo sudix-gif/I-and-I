@@ -75,3 +75,50 @@ img{
 max-width:100%;
 border-radius:10px;
 }
+/* Mobile Responsive */
+
+.container {
+  width: 95%;
+  max-width: 600px;
+  margin: auto;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 18px;
+}
+
+.post {
+  background: white;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+

@@ -12,7 +12,13 @@
 <div class="container">
 
 <h1>🌍 I&I Dashboard</h1>
-
+<img
+  id="profileImage"
+  src="/uploads/default.png"
+  width="120"
+  height="120"
+  style="border-radius:50%;object-fit:cover;border:3px solid #0d6efd;"
+>
 <h2 id="welcome">Loading...</h2>
 
 <p id="subscription"></p>
@@ -26,10 +32,25 @@
 <a href="edit-profile.html">
 <button>👤 Edit Profile</button>
 </a>
+<br><br>
 
+<a href="profile-photo.html">
+  <button>🖼 Profile Picture</button>
+</a>
 <br><br>
 
 <button onclick="logout()">🚪 Logout</button>
+
+<br><br>
+
+<a href="search.html">
+  <button>🔍 Search Users</button>
+</a>
+<a href="topic.html">
+<button>
+💡 Suggest Topic
+</button>
+</a>
 
 <hr>
 
@@ -51,7 +72,10 @@ document.getElementById("welcome").innerText =
 
 document.getElementById("subscription").innerText =
   "Subscription: " + user.subscription;
-
+if (user.profilePhoto) {
+  document.getElementById("profileImage").src =
+    "/uploads/" + user.profilePhoto;
+}
 function logout() {
   localStorage.removeItem("user");
   window.location.href = "/login.html";

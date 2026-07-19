@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+<h1>👤 User Profile</h1>
+
+<h2 id="username">Loading...</h2>
+
+<p>This feature will be completed in the next step.</p>
+
+<a href="search.html">
+  <button>⬅ Back</button>
+</a>
+
+</div>
+
+<script>
+const username = localStorage.getItem("viewUser");
+document.getElementById("username").innerText = username;
+</script>
+
+</body>
+</html>
