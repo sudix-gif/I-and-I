@@ -385,6 +385,39 @@ app.get("/topics", (req, res) => {
 
   res.json(db.topics);
 	});
+// Get User Profile
+app.get("/user/:username", (req, res) => {
+
+  const username = req.params.username;
+
+  const db = loadDB();
+
+  const user = db.users.find(
+    u => u.username === username
+  );
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found"
+    });
+  }
+
+  const posts = db.posts.filter(
+    p => p.username === username
+  );
+
+  res.json({
+    success: true,
+    user: {
+      username: user.username,
+      profilePhoto: user.profilePhoto,
+      subscription: user.subscription
+    },
+    posts: posts
+  });
+
+});
 
 app.listen(PORT, () => {
   console.log(`I&I Server running on port ${PORT}`);
