@@ -4,15 +4,22 @@
   <title>User Profile</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="container">
 
 <h1>👤 User Profile</h1>
 
+<img id="photo" width="120" style="border-radius:50%;">
+
 <h2 id="username">Loading...</h2>
 
-<p>This feature will be completed in the next step.</p>
+<p id="subscription"></p>
+
+<h3>Posts</h3>
+
+<div id="posts"></div>
 
 <a href="search.html">
   <button>⬅ Back</button>
@@ -20,9 +27,79 @@
 
 </div>
 
+
 <script>
+
 const username = localStorage.getItem("viewUser");
-document.getElementById("username").innerText = username;
+
+if (!username) {
+  document.getElementById("username").innerText =
+  "No user selected";
+}
+else {
+
+fetch("/user/" + username)
+
+.then(res => res.json())
+
+.then(data => {
+
+  if (!data.success) {
+    document.getElementById("username").innerText =
+    "User not found";
+    return;
+  }
+
+
+  document.getElementById("username").innerText =
+  data.user.username;
+
+
+  document.getElementById("subscription").innerText =
+  "Plan: " + data.user.subscription;
+
+
+  if (data.user.profilePhoto) {
+
+    document.getElementById("photo").src =
+    "/uploads/" + data.user.profilePhoto;
+
+  }
+
+
+  const postsDiv =
+  document.getElementById("posts");
+
+
+  data.posts.forEach(post => {
+
+    postsDiv.innerHTML += `
+
+      <div class="post">
+
+        <h4>${post.title || "Post"}</h4>
+
+        <p>${post.content || ""}</p>
+
+        <small>
+        ❤️ ${post.likes || 0}
+        </small>
+
+      </div>
+
+    `;
+
+  });
+
+
+})
+
+.catch(err => {
+ console.log(err);
+});
+
+}
+
 </script>
 
 </body>

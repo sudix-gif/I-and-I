@@ -77,6 +77,7 @@ async function loadPosts() {
 
   const response = await fetch("/posts");
   const posts = await response.json();
+console.log(posts);
 
   postsContainer.innerHTML = "";
 
@@ -151,8 +152,11 @@ async function likePost(id) {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ id })
-  });
+body: JSON.stringify({
+  id,
+  username: JSON.parse(localStorage.getItem("user")).username
+})
+});
 
   const data = await response.json();
 

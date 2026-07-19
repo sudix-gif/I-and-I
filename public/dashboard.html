@@ -43,6 +43,7 @@
 
 <br><br>
 
+<button onclick="toggleDarkMode()">🌙 Dark Mode</button>
 <a href="search.html">
   <button>🔍 Search Users</button>
 </a>
@@ -79,6 +80,22 @@ if (user.profilePhoto) {
 function logout() {
   localStorage.removeItem("user");
   window.location.href = "/login.html";
+}
+
+function toggleDarkMode(){
+
+  document.body.classList.toggle("dark-mode");
+
+  const enabled =
+    document.body.classList.contains("dark-mode");
+
+  localStorage.setItem("darkMode", enabled);
+
+}
+
+
+if(localStorage.getItem("darkMode") === "true"){
+  document.body.classList.add("dark-mode");
 }
 </script>
 
