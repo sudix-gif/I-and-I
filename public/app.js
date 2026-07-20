@@ -333,3 +333,47 @@ async function submitTopic() {
   }
 
 }
+async function loadTopics(){
+
+  const response = await fetch("/topics");
+
+  const topics = await response.json();
+
+  const container =
+    document.getElementById("topics");
+
+  container.innerHTML = "";
+
+  if(topics.length === 0){
+
+    container.innerHTML =
+    "<p>No topics submitted yet</p>";
+
+    return;
+
+  }
+
+
+  topics.forEach(t => {
+
+    container.innerHTML += `
+
+      <div class="post">
+
+        <h3>💡 ${t.topic}</h3>
+
+        <p>
+          👤 User: ${t.username || "Unknown"}
+        </p>
+
+        <small>
+          📅 ${t.created_at}
+        </small>
+
+      </div>
+
+    `;
+
+  });
+
+}

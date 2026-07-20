@@ -418,7 +418,82 @@ app.get("/user/:username", (req, res) => {
   });
 
 });
+app.get("/admin/posts", (req, res) => {
+
+  const db = loadDB();
+
+  res.json(db.posts);
+
+});
+app.delete("/admin/post/:id", (req, res) => {
+
+  const id = Number(req.params.id);
+
+  const db = loadDB();
+
+  db.posts = db.posts.filter(post => post.id !== id);
+
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: "Post deleted"
+  });
+
+});
+app.put("/admin/post/:id", (req,res)=>{
+
+  const id = Number(req.params.id);
+
+  const {title, content} = req.body;
+
+  const db = loadDB();
+
+  const post = db.posts.find(p => p.id === id);
+
+  if(!post){
+    return res.status(404).json({
+      success:false,
+      message:"Post not found"
+    });
+  }
+
+  post.title = title;
+  post.content = content;
+
+  saveDB(db);
+
+  res.json({
+    success:true,
+    message:"Post updated"
+  });
+
+});
+app.get("/admin/users", (req, res) => {
+
+  const db = loadDB();
+
+  res.json(db.users);
+
+});
+app.delete("/admin/user/:id", (req, res) => {
+
+  const id = Number(req.params.id);
+
+  const db = loadDB();
+
+  db.users = db.users.filter(u => u.id !== id);
+
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: "User deleted"
+  });
+
+});
 
 app.listen(PORT, () => {
   console.log(`I&I Server running on port ${PORT}`);
 });
+

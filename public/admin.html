@@ -58,15 +58,46 @@
 
   <br><br>
 
-  <button type="submit">
-    Publish
-  </button>
+<button id="submitBtn" type="submit">
+  Publish
+</button>
 
 </form>
 
 <p id="message"></p>
+<hr>
 
+<h2>💡 User Topics</h2>
+
+<button onclick="loadTopics()">
+  🔄 Load Topics
+</button>
+
+<div id="topics"></div>
+
+<hr>
+
+<h2>📰 Manage Posts</h2>
+
+<button onclick="loadPosts()">
+  🔄 Load Posts
+</button>
+<hr>
+
+<h2>👥 Manage Users</h2>
+
+<button onclick="loadUsers()">
+  🔄 Load Users
+</button>
+
+<div id="users"></div>
+
+<div id="adminPosts"></div>
+
+
+</script>
 <script src="admin.js"></script>
 
 </body>
 </html>
+
